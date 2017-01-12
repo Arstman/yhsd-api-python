@@ -1,12 +1,17 @@
 # yhsd-api-python
 
-友好速搭应用开发 Python SDK
+友好速搭应用开发 Python SDK, 脉宁实业Aaron修改版，
+
+修改了verify文件里关于B64编码的代码，使之适配Python 3.5
+另外，重新修改config文件，增加了一个 config 类，token的获取函数也因之变化，这样做的目的，是为了增加动态参数，可以根据不同app生成新的token.
 
 ## 安装
 
 ```python
 pip install yhsd-sdk
 ```
+#####上面这个在ipython下 不行， 舍弃之
+
 
 或下载到本地后，手动安装
 
@@ -16,30 +21,28 @@ pip install /path/to/file
 ```
 
 ## 使用方法
+#首先import
+#私有应用
+from yhsd_sdk import config,verify,api,privateapp,utils
+#公共应用
+from yhsd_sdk import config,verify,api,publiceapp,utils
 
 ### 1）配置并创建App实例（如果是开放应用，则需要设置用用需要的权限列表）；
 
-```python
-# 配置文件config.py
-# 应用的key
-AppKey = '这里填应用的App Key'
-# 应用的密钥
-AppSecret = '这里填应用的App Secret'
-# 应用所需要的权限
-AppScope = ['所需权限1', '所需权限2']
-```
+new_config = config.config('你的App Key','你的App Secret')
+
 
 ### 2）获取授权Token（只需操作一次，永久生效）；
 
 ```python
 # 获取私有应用token
-token = privateapp.generate_token()
+token = privateapp.generate_token(new_config)
 
 # 获取公有应用token
 # 1) 生成授权链接并调整获取授权码。redirect_url为跳转链接；shop_key为商铺的唯一key
-publicapp.generate_authorize_url (redirect_url, shop_key)
+publicapp.generate_authorize_url (new_config,redirect_url, shop_key)
 # 2) 根据返回的授权码获取Token。auth_code为返回的授权码；redirect_uri为跳转链接
-token = publicapp.generate_token(auth_code, redirect_uri)
+token = publicapp.generate_token(new_config,auth_code, redirect_uri)
 ```
 
 因为token是永久有效的，因此在第一次授权获取token后，可保存下来，以后直接使用。
