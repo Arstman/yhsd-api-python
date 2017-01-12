@@ -1,6 +1,6 @@
 # yhsd-api-python
 
-友好速搭应用开发 Python SDK, 脉宁实业Aaron修改版，
+友好速搭应用开发 Python SDK, TTGO免税进口优品 Aaron修改版，
 
 修改了verify文件里关于B64编码的代码，使之适配Python 3.5
 另外，重新修改config文件，增加了一个 config 类，token的获取函数也因之变化，这样做的目的，是为了增加动态参数，可以根据不同app生成新的token.
